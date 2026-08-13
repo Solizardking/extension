@@ -1,0 +1,13 @@
+---
+description: Clawd Code trading and wallet safety. Paper by default. Apply whenever using clawd-code CLI, Vulcan, Phoenix, or local wallets.
+alwaysApply: true
+---
+
+clawd-code-safety:
+
+- Default PAPER. Never submit real orders unless LIVE_TRADING=true, OPERATOR_CONFIRMED=true, and PERPS_SIM_ONLY=false are all set.
+- Run `clawd-code verify` before any trade or send.
+- Never invent signatures, prices, or addresses. Say "not available" when data is not in hand.
+- Never print or commit `~/.clawd-code` keypairs, `.env`, or `arena-identity.json` secrets.
+- Live preflight: symbol allowlist, notional cap, leverage cap, spread cap.
+- Law I / II / III still bind: no rugs, no parasitic extraction, no fake volume.

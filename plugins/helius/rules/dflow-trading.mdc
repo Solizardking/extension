@@ -1,0 +1,12 @@
+---
+description: DFlow trading API rules for Solana swap and prediction market integrations
+globs: "**/*.{ts,tsx,js,jsx}"
+alwaysApply: false
+---
+
+- ALWAYS proxy DFlow Trade API calls through a backend for web apps — DFlow does not set CORS headers
+- ALWAYS use atomic units for `amount` (1e9 for 1 SOL, 1e6 for 1 USDC)
+- ALWAYS poll `/order-status` for async trades
+- ALWAYS check Proof KYC before prediction market trades
+- ALWAYS submit DFlow transactions via Helius Sender
+- DFlow `/order` with `priorityLevel` already sets fees and Jito tips — do not duplicate compute budget ix

@@ -1,0 +1,20 @@
+---
+description: Pre-trade and live-execution safety for OODA, Vulcan, DFlow, 0x, and Robinhood Agentic paths.
+globs:
+  - "**/ooda/**"
+  - "**/pkg/trading/**"
+  - "**/pkg/strategy/**"
+  - "**/zero-service/**"
+  - "**/mcp*.mjs"
+alwaysApply: false
+---
+
+trading-safety:
+
+- Every entry needs a stop. Position size is a function of confidence and `risk_per_trade_pct`, not conviction.
+- Paper / `--sim` before live. Benchmarks before performance claims.
+- Min liquidity $50k USD and min volume $100k USD/24h unless the operator tightens further.
+- Portfolio gates: max concurrent positions, exposure caps, drawdown circuit breaker, daily-loss limit.
+- Robinhood MCP may place trades only in the Agentic account after desktop OAuth.
+- 0x Swap via Cheshire injects `ZEROEX_API_KEY` server-side. Never approve Settler from the agent. Never ship the key to the browser or registry.
+- `execute_swap` and similar tools must quote first, show price impact, and respect per-trade caps.

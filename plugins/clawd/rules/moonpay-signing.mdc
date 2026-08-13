@@ -1,0 +1,15 @@
+---
+description: MoonPay on-ramp URL signing and IP matching. Required for live widgets after 7 August 2026.
+globs:
+  - "**/moonpay/**"
+  - "**/*moonpay*"
+alwaysApply: false
+---
+
+moonpay-signing:
+
+- Build widget URLs on the backend. Never expose `MOONPAY_SECRET_KEY` / `sk_test_` / `sk_live_` to the client.
+- Hash the customer's public IP (HMAC-SHA256, secret key, base64) as `allowedIpAddress`, then sign the full query string including the leading `?`. Append `signature` last, URL-encoded.
+- Use the device IP (`True-Client-IP` or left-most public `X-Forwarded-For`). Canonicalize IPv6 to RFC 5952 before hashing. Do not hash loopback, RFC1918, or the server address.
+- Generate the URL immediately before the widget opens. Prefer WKWebView / Android WebView. For Safari / Private Relay, omit `allowedIpAddress` rather than hashing the relay IP.
+- Test on `buy-sandbox.moonpay.com` with `sk_test_` / `pk_test_` before live.

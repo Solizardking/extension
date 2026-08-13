@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-labelledby="title desc">
+  <title id="title">Helius</title>
+  <desc id="desc">Official 1:1 Helius plugin mark: orange sunburst on dark square.</desc>
+  <rect width="128" height="128" rx="24" fill="#0B0B0B"/>
+  <g transform="translate(64 64)" fill="#E84125">
+    <polygon points="0,-38 8,-14 -8,-14"/>
+    <polygon points="0,38 8,14 -8,14"/>
+    <polygon points="38,0 14,8 14,-8"/>
+    <polygon points="-38,0 -14,8 -14,-8"/>
+    <polygon points="27,-27 14,-4 4,-14"/>
+    <polygon points="-27,27 -14,4 -4,14"/>
+    <polygon points="27,27 14,4 4,14"/>
+    <polygon points="-27,-27 -14,-4 -4,-14"/>
+    <circle r="11"/>
+  </g>
+</svg>

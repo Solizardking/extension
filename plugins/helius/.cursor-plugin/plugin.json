@@ -1,0 +1,23 @@
+{
+  "name": "helius",
+  "displayName": "Helius",
+  "version": "1.0.0",
+  "description": "Build on Solana with Helius — MCP, CLI, DAS/Sender, DFlow/Jupiter/Phantom/OKX/SVM skills, plus Clawd perps, Grok, Pump MCP, and Solana docs.",
+  "author": {
+    "name": "OpenClawd",
+    "url": "https://www.helius.dev/docs"
+  },
+  "license": "MIT",
+  "keywords": [
+    "helius",
+    "solana",
+    "das",
+    "sender",
+    "dflow",
+    "jupiter",
+    "phantom",
+    "mcp",
+    "clawd"
+  ],
+  "logo": "assets/logo.svg"
+}

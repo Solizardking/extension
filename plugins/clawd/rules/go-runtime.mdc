@@ -1,0 +1,18 @@
+---
+description: Go runtime standards for ClawdBot (github.com/8bitlabs/clawdbot). Apply when editing cmd/, pkg/, ooda/, web/, or zero-service.
+globs:
+  - "**/*.go"
+  - "**/go.mod"
+  - "**/Makefile"
+  - "**/zero-service/**"
+alwaysApply: false
+---
+
+go-runtime:
+
+- Target Go 1.26.4+ (`go.mod`). Older 1.26 toolchains fail `govulncheck`.
+- Keep changes small and package-scoped. Prefer `pkg/` libraries over growing `cmd/` binaries.
+- Trading and funding paths stay dry-run by default. Live transfer or trade needs explicit opt-in and bounded limits.
+- Never commit `.env`, wallet keypairs, install ledgers, or generated runtime state.
+- Verify with `make test` and `make release-check` before claiming a change is shippable.
+- Public surfaces: runtime `https://github.com/Solizardking/clawdbot-go`, hub `https://github.com/solizardking/solana-clawd`, gateway `https://zk.x402.wtf`, terminal `https://cheshireterminal.ai`.

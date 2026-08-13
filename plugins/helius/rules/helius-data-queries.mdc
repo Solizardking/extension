@@ -1,0 +1,27 @@
+---
+description: Efficient data query patterns for Helius APIs
+globs: "**/*.{ts,tsx,js,jsx,rs}"
+alwaysApply: false
+---
+
+## DAS API
+
+- Use `getAssetsByOwner` with `showFungible: true` to get both NFTs and fungible tokens in one call
+- Use `searchAssets` for multi-criteria queries instead of client-side filtering
+- Use batch endpoints (`getAsset` with `ids` array, `getAssetProofBatch`) instead of sequential single calls
+
+## Transaction History
+
+- Prefer `parseTransactions` over raw RPC for transaction history — it returns human-readable data
+- Use `getTransactionHistory` in `signatures` mode for lightweight listing, then `parseTransactions` only on transactions of interest
+- SDK parameter names differ from API names — REST uses kebab-case, Enhanced SDK uses camelCase. Check the enhanced-transactions reference before pagination code
+- Never use `any` for SDK request params
+
+## Token & Balance Queries
+
+- Prefer `getBalance` over `getWalletBalances` when only SOL balance is needed
+- Prefer `getTokenBalances` over `getWalletBalances` when you do not need USD values
+
+## Documentation Lookups
+
+- Use `lookupHeliusDocs` with the `section` parameter for targeted lookups

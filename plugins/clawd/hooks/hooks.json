@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [
+      {
+        "command": "./scripts/format-code.sh",
+        "matcher": "Write|TabWrite"
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "./scripts/validate-shell.sh",
+        "failClosed": false
+      }
+    ],
+    "beforeMCPExecution": [
+      {
+        "command": "./scripts/validate-shell.sh",
+        "matcher": "execute_swap|place_order|cheshire_0x_price"
+      }
+    ],
+    "sessionEnd": [
+      {
+        "command": "./scripts/audit.sh"
+      }
+    ]
+  }
+}

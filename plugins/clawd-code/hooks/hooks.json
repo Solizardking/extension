@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [
+      {
+        "command": "./scripts/format-code.sh",
+        "matcher": "Write|TabWrite"
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "./scripts/validate-shell.sh"
+      }
+    ],
+    "sessionEnd": [
+      {
+        "command": "./scripts/audit.sh"
+      }
+    ]
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "mcpServers": {
+    "helius": {
+      "command": "node",
+      "args": ["${CORE_AI_ROOT}/helius-mcp/dist/index.js"],
+      "env": {
+        "HELIUS_API_KEY": "${HELIUS_API_KEY}",
+        "SOLANA_RPC_URL": "${SOLANA_RPC_URL}"
+      }
+    },
+    "dflow": {
+      "url": "https://pond.dflow.net/mcp"
+    },
+    "zkcompression": {
+      "url": "https://www.zkcompression.com/mcp"
+    },
+    "solana-mcp": {
+      "url": "https://mcp.solana.com/mcp"
+    },
+    "pump-fun": {
+      "command": "node",
+      "args": ["${CORE_AI_ROOT}/mcp-server/dist/index.js"],
+      "env": {
+        "SOLANA_RPC_URL": "${SOLANA_RPC_URL}",
+        "HELIUS_API_KEY": "${HELIUS_API_KEY}"
+      }
+    },
+    "clawd-grok": {
+      "command": "node",
+      "args": [
+        "${CORE_AI_ROOT}/clawd-grok/dist/index.js",
+        "mcp",
+        "--groups",
+        "market,trade,position,margin"
+      ],
+      "env": {
+        "XAI_API_KEY": "${XAI_API_KEY}",
+        "SOLANA_RPC_URL": "${SOLANA_RPC_URL}",
+        "HELIUS_API_KEY": "${HELIUS_API_KEY}"
+      }
+    }
+  }
+}

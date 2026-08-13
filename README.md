@@ -2,8 +2,11 @@
 
 Build and publish Cursor Marketplace plugins from a single repo.
 
-Two starter plugins are included:
+Plugins included:
 
+- **clawd**: official Clawd plugin (six-law harness, ClawdBot Go, Cheshire Terminal MCP, OODA)
+- **clawd-code**: Clawd Code CLI plugin (paper-gated perps, Helius/DFlow/Jupiter/Phantom, Agent Arena)
+- **helius**: Helius + core-ai (MCP, CLI, DAS/Sender, Pump, perps, Grok, Solana docs)
 - **starter-simple**: rules and skills only
 - **starter-advanced**: rules, skills, agents, commands, hooks, MCP, and scripts
 

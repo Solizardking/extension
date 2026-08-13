@@ -1,0 +1,18 @@
+---
+description: Conventions for the Clawd Code CLI repo (@solana-clawd/clawd-code). Apply when editing src/, web/, scripts/, or clawd-plugin/.
+globs:
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/clawd.json"
+  - "**/package.json"
+alwaysApply: false
+---
+
+clawd-code-conventions:
+
+- Package `@solana-clawd/clawd-code`. Entry `dist/cli.js`. Runtime config `~/.clawd-code/.env`.
+- Modes: code, trade, research, image, voice, repl. Lead with the mode.
+- Default model `grok-4.3`. Research uses `grok-4.20-multi-agent` (4 or 16 agents).
+- Ship runnable TypeScript/Solana snippets, not prose about code.
+- Keep `LIVE_TRADING` false in examples unless the operator explicitly arms live.
+- Deep skill references live at `$CLAWD_CODE_ROOT/clawd-plugin/skills/*/references`.

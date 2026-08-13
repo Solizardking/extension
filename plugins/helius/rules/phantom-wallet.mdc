@@ -1,0 +1,11 @@
+---
+description: Phantom Connect SDK integration rules for frontend Solana apps (React, React Native, browser)
+globs: "**/*.{ts,tsx,js,jsx}"
+alwaysApply: false
+---
+
+- ALWAYS use `@phantom/react-sdk` for React, `@phantom/browser-sdk` for vanilla/Vue/Svelte, `@phantom/react-native-sdk` for RN/Expo
+- Never use `window.phantom.solana` with `@solana/kit`
+- Google/Apple OAuth needs a Phantom Portal App ID and exact redirect allowlist
+- `react-native-get-random-values` MUST be the first import in RN entry
+- Never auto-connect; never put `HELIUS_API_KEY` in the browser; verify token-gating server-side with DAS

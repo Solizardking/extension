@@ -1,0 +1,23 @@
+{
+  "name": "clawd-code",
+  "displayName": "Clawd Code",
+  "version": "1.0.0",
+  "description": "Cursor plugin for Clawd Code — Solana-native coding CLI, paper-gated perps, Helius/DFlow/Jupiter/Phantom skills, and Agent Arena.",
+  "author": {
+    "name": "OpenClawd",
+    "url": "https://x402.wtf"
+  },
+  "license": "MIT",
+  "keywords": [
+    "clawd-code",
+    "solana",
+    "grok",
+    "perps",
+    "helius",
+    "jupiter",
+    "dflow",
+    "x402",
+    "arena"
+  ],
+  "logo": "assets/logo.svg"
+}
