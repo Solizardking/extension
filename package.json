@@ -5,6 +5,7 @@
   "version": "1.0.0",
   "publisher": "openclawd",
   "license": "MIT",
+  "pricing": "Free",
   "icon": "media/icon.png",
   "galleryBanner": {
     "color": "#061117",
