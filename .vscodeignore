@@ -1,0 +1,13 @@
+.cursor/**
+.vscode/**
+.git/**
+.gitignore
+.github/**
+**/.DS_Store
+**/*.vsix
+node_modules/**
+docs/**
+plugins/starter-simple/**
+plugins/starter-advanced/**
+scripts/**
+.vscode-test/**

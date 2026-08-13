@@ -1,0 +1,204 @@
+{
+  "name": "clawd",
+  "displayName": "Clawd",
+  "description": "Official Clawd pack for VS Code, Cursor, and VSCodium — Cursor plugins (Clawd, Clawd Code, Helius), Solana MCP servers, and agent skills.",
+  "version": "1.0.0",
+  "publisher": "openclawd",
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#061117",
+    "theme": "dark"
+  },
+  "homepage": "https://cheshireterminal.ai",
+  "bugs": {
+    "url": "https://github.com/solizardking/extension/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/solizardking/extension.git"
+  },
+  "qna": "marketplace",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Machine Learning",
+    "Other"
+  ],
+  "keywords": [
+    "clawd",
+    "solana",
+    "helius",
+    "mcp",
+    "cursor",
+    "jupiter",
+    "dflow",
+    "phantom",
+    "perps",
+    "cheshire"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "clawd.installCursorPlugins",
+        "title": "Clawd: Install Cursor Plugins",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "clawd.openCursorPluginsFolder",
+        "title": "Clawd: Open Cursor Plugins Folder",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "clawd.showStatus",
+        "title": "Clawd: Show Status"
+      },
+      {
+        "command": "clawd.showOutput",
+        "title": "Clawd: Show Output"
+      },
+      {
+        "command": "clawd.openSettings",
+        "title": "Clawd: Open Settings"
+      },
+      {
+        "command": "clawd.refresh",
+        "title": "Clawd: Refresh",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "clawd.focusExplorer",
+        "title": "Clawd: Focus Explorer"
+      },
+      {
+        "command": "clawd.showPlugin",
+        "title": "Clawd: Show Plugin"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "clawd",
+          "title": "Clawd",
+          "icon": "media/activitybar.svg"
+        }
+      ]
+    },
+    "views": {
+      "clawd": [
+        {
+          "id": "clawd.explorer",
+          "name": "Marketplace"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "clawd.explorer",
+        "contents": "Install the OpenClawd marketplace plugins (Clawd, Clawd Code, Helius) into Cursor.\n[Install Cursor Plugins](command:clawd.installCursorPlugins)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "clawd.refresh",
+          "when": "view == clawd.explorer",
+          "group": "navigation"
+        },
+        {
+          "command": "clawd.installCursorPlugins",
+          "when": "view == clawd.explorer",
+          "group": "navigation"
+        },
+        {
+          "command": "clawd.openCursorPluginsFolder",
+          "when": "view == clawd.explorer",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "clawd.showPlugin",
+          "when": "false"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Clawd",
+      "properties": {
+        "clawd.installCursorPluginsOnActivate": {
+          "type": "boolean",
+          "default": true,
+          "description": "Copy Clawd, Clawd Code, and Helius into ~/.cursor/plugins/local when the extension activates."
+        },
+        "clawd.heliusApiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Helius API key (or set HELIUS_API_KEY)."
+        },
+        "clawd.solanaRpcUrl": {
+          "type": "string",
+          "default": "https://api.mainnet-beta.solana.com",
+          "description": "Solana RPC URL (or set SOLANA_RPC_URL)."
+        },
+        "clawd.cheshireApiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Cheshire Terminal bearer token (or set CHESHIRE_API_KEY)."
+        },
+        "clawd.xaiApiKey": {
+          "type": "string",
+          "default": "",
+          "description": "xAI API key for Clawd Grok MCP (or set XAI_API_KEY)."
+        },
+        "clawd.coreAiRoot": {
+          "type": "string",
+          "default": "",
+          "description": "Path to core-ai (helius-mcp, pump MCP, clawd-grok). Or set CORE_AI_ROOT."
+        },
+        "clawd.cheshireTerminalRoot": {
+          "type": "string",
+          "default": "",
+          "description": "Path to cheshire-terminal-main. Or set CHESHIRE_TERMINAL_ROOT."
+        },
+        "clawd.clawdCodeRoot": {
+          "type": "string",
+          "default": "",
+          "description": "Path to Clawd Code CLI checkout. Or set CLAWD_CODE_ROOT."
+        },
+        "clawd.zeroClawdRoot": {
+          "type": "string",
+          "default": "",
+          "description": "Path to zero-clawd checkout. Or set ZERO_CLAWD_ROOT."
+        },
+        "clawd.clawdBrowserRoot": {
+          "type": "string",
+          "default": "",
+          "description": "Path to ClawdBrowser checkout. Or set CLAWDBROWSER_ROOT."
+        }
+      }
+    },
+    "mcpServerDefinitionProviders": [
+      {
+        "id": "clawd.mcp",
+        "label": "Clawd MCP Servers"
+      }
+    ]
+  },
+  "scripts": {
+    "validate": "node scripts/validate-template.mjs",
+    "package": "vsce package",
+    "publish:vsce": "vsce publish",
+    "publish:ovsx": "ovsx publish",
+    "vscode:prepublish": "node scripts/validate-template.mjs"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^3.6.0",
+    "ovsx": "^0.10.5"
+  }
+}
