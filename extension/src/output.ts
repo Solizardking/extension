@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 
-export const CLAWD_OUTPUT_CHANNEL = vscode.window.createOutputChannel("Clawd");
+export const CLAWD_OUTPUT_CHANNEL = vscode.window.createOutputChannel("OpenClawd");
 
 export function log(message: string): void {
   CLAWD_OUTPUT_CHANNEL.appendLine(`[${new Date().toISOString()}] ${message}`);

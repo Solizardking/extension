@@ -1,24 +1,15 @@
-# Clawd
+# OpenClawd
 
-VS Code extension for Clawd.
+VS Code extension for OpenClawd.
 
 ## Commands
 
-- `clawd: Ask Mesh`
-- `clawd: Ask Mesh about Selection`
-- `clawd: Show Mesh Status`
-- `clawd: Open Mesh`
-- `clawd: Show Output`
+- OpenClawd: Ask Mesh
+- OpenClawd: Ask Mesh about Selection
+- OpenClawd: Show Mesh Status
+- OpenClawd: Open Mesh
+- OpenClawd: Show Output
 
 ## Requirements
 
 Visual Studio Code 1.96.0 or newer.
-
-## Extension Settings
-
-- `clawd.meshUrl`: Mesh endpoint
-- `clawd.meshModel`: Mesh model id
-
-## Source
-
-https://github.com/solizardking/extension

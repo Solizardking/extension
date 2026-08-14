@@ -9,7 +9,7 @@ export function activate(context: vscode.ExtensionContext): void {
 
   context.subscriptions.push(
     vscode.workspace.onDidChangeConfiguration((event) => {
-      if (event.affectsConfiguration("clawd")) {
+      if (event.affectsConfiguration("openclawd")) {
         statusBar.refresh();
       }
     })

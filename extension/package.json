@@ -1,10 +1,9 @@
 {
-  "name": "clawd",
-  "displayName": "Clawd",
-  "description": "VS Code extension for Clawd",
-  "version": "1.0.3",
+  "name": "openclawd",
+  "displayName": "OpenClawd",
+  "description": "VS Code extension for OpenClawd",
+  "version": "1.0.0",
   "publisher": "clawd",
-  "repository": "https://github.com/solizardking/extension",
   "license": "MIT",
   "engines": {
     "vscode": "^1.96.0"
@@ -13,59 +12,62 @@
     "Other"
   ],
   "keywords": [
-    "clawd",
-    "solana",
-    "vscode"
+    "openclawd",
+    "solana"
   ],
   "icon": "assets/icon.png",
   "activationEvents": [
-    "onStartupFinished"
+    "onCommand:openclawd.askMesh",
+    "onCommand:openclawd.askMeshSelection",
+    "onCommand:openclawd.meshStatus",
+    "onCommand:openclawd.openMesh",
+    "onCommand:openclawd.showOutput"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "clawd.askMesh",
-        "title": "clawd: Ask Mesh"
+        "command": "openclawd.askMesh",
+        "title": "OpenClawd: Ask Mesh"
       },
       {
-        "command": "clawd.askMeshSelection",
-        "title": "clawd: Ask Mesh about Selection"
+        "command": "openclawd.askMeshSelection",
+        "title": "OpenClawd: Ask Mesh about Selection"
       },
       {
-        "command": "clawd.meshStatus",
-        "title": "clawd: Show Mesh Status"
+        "command": "openclawd.meshStatus",
+        "title": "OpenClawd: Show Mesh Status"
       },
       {
-        "command": "clawd.openMesh",
-        "title": "clawd: Open Mesh"
+        "command": "openclawd.openMesh",
+        "title": "OpenClawd: Open Mesh"
       },
       {
-        "command": "clawd.showOutput",
-        "title": "clawd: Show Output"
+        "command": "openclawd.showOutput",
+        "title": "OpenClawd: Show Output"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "command": "clawd.askMeshSelection",
+          "command": "openclawd.askMeshSelection",
           "when": "editorHasSelection",
-          "group": "clawd"
+          "group": "openclawd"
         }
       ]
     },
     "configuration": {
-      "title": "Clawd",
+      "title": "OpenClawd",
       "properties": {
-        "clawd.meshUrl": {
+        "openclawd.meshUrl": {
           "type": "string",
           "default": "",
-          "description": "Mesh endpoint. Leave empty to use the bundled default."
+          "description": "Mesh endpoint"
         },
-        "clawd.meshModel": {
+        "openclawd.meshModel": {
           "type": "string",
           "default": "qwen2.5:1.5b",
-          "description": "Default Mesh model id"
+          "description": "Mesh model id"
         }
       }
     }
@@ -73,8 +75,8 @@
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "watch": "webpack --watch --config webpack.config.js",
-    "package": "vsce package --no-rewrite-relative-links",
-    "publish": "vsce publish",
+    "package": "vsce package --no-rewrite-relative-links --allow-missing-repository",
+    "publish": "vsce publish --allow-missing-repository",
     "vscode:prepublish": "npm run build"
   },
   "devDependencies": {

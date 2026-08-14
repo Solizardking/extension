@@ -4,16 +4,25 @@ import { log, showOutput } from "./output";
 import { readSettings } from "./settings";
 import { StatusBarManager } from "./statusBar";
 
+function requireMeshUrl(url: string): string {
+  const trimmed = url.trim();
+  if (!trimmed) {
+    throw new Error("Set openclawd.meshUrl in Settings, then try again.");
+  }
+  return trimmed;
+}
+
 async function runMeshChat(prompt: string): Promise<void> {
   const settings = readSettings();
   try {
+    const meshUrl = requireMeshUrl(settings.meshUrl);
     await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: "Clawd Mesh",
+        title: "OpenClawd Mesh",
       },
       async () => {
-        const result = await chat(settings.meshUrl, {
+        const result = await chat(meshUrl, {
           model: settings.meshModel,
           prompt,
           maxTokens: 512,
@@ -27,7 +36,7 @@ async function runMeshChat(prompt: string): Promise<void> {
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     log(`Mesh error: ${message}`);
-    await vscode.window.showErrorMessage(`Clawd Mesh: ${message}`);
+    await vscode.window.showErrorMessage(`OpenClawd: ${message}`);
   }
 }
 
@@ -36,10 +45,10 @@ export default function registerCommands(
   statusBar: StatusBarManager
 ): void {
   context.subscriptions.push(
-    vscode.commands.registerCommand("clawd.askMesh", async () => {
+    vscode.commands.registerCommand("openclawd.askMesh", async () => {
       const prompt = await vscode.window.showInputBox({
-        title: "Clawd Mesh",
-        prompt: "Ask Clawd Mesh",
+        title: "OpenClawd Mesh",
+        prompt: "Ask Mesh",
         ignoreFocusOut: true,
       });
       if (!prompt) {
@@ -47,7 +56,7 @@ export default function registerCommands(
       }
       await runMeshChat(prompt);
     }),
-    vscode.commands.registerCommand("clawd.askMeshSelection", async () => {
+    vscode.commands.registerCommand("openclawd.askMeshSelection", async () => {
       const editor = vscode.window.activeTextEditor;
       const selected = editor?.document.getText(editor.selection)?.trim();
       if (!selected) {
@@ -56,16 +65,14 @@ export default function registerCommands(
       }
       await runMeshChat(selected);
     }),
-    vscode.commands.registerCommand("clawd.meshStatus", async () => {
+    vscode.commands.registerCommand("openclawd.meshStatus", async () => {
       const settings = readSettings();
       try {
-        const [live, models] = await Promise.all([
-          health(settings.meshUrl),
-          listModels(settings.meshUrl),
-        ]);
+        const meshUrl = requireMeshUrl(settings.meshUrl);
+        const [live, models] = await Promise.all([health(meshUrl), listModels(meshUrl)]);
         log(
           [
-            `Clawd Mesh: ${settings.meshUrl}`,
+            `Mesh: ${meshUrl}`,
             `Health: ${live.ok ? "ok" : "down"}`,
             `Default model: ${settings.meshModel}`,
             `Models (${models.length}): ${models.slice(0, 12).join(", ")}`,
@@ -75,13 +82,19 @@ export default function registerCommands(
         statusBar.refresh();
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
-        await vscode.window.showErrorMessage(`Clawd Mesh: ${message}`);
+        await vscode.window.showErrorMessage(`OpenClawd: ${message}`);
       }
     }),
-    vscode.commands.registerCommand("clawd.openMesh", async () => {
-      await vscode.env.openExternal(vscode.Uri.parse(readSettings().meshUrl));
+    vscode.commands.registerCommand("openclawd.openMesh", async () => {
+      try {
+        const meshUrl = requireMeshUrl(readSettings().meshUrl);
+        await vscode.env.openExternal(vscode.Uri.parse(meshUrl));
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        await vscode.window.showErrorMessage(`OpenClawd: ${message}`);
+      }
     }),
-    vscode.commands.registerCommand("clawd.showOutput", () => {
+    vscode.commands.registerCommand("openclawd.showOutput", () => {
       showOutput(false);
     })
   );

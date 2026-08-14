@@ -7,9 +7,9 @@ export class StatusBarManager implements vscode.Disposable {
 
   constructor() {
     this.item = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
-    this.item.name = "Clawd";
-    this.item.command = "clawd.askMesh";
-    this.item.text = "$(zap) Clawd";
+    this.item.name = "OpenClawd";
+    this.item.command = "openclawd.askMesh";
+    this.item.text = "$(zap) OpenClawd";
     this.item.tooltip = this.tooltip("Ready");
     this.item.show();
     this.refresh();
@@ -19,13 +19,13 @@ export class StatusBarManager implements vscode.Disposable {
     const settings = readSettings();
     health(settings.meshUrl)
       .then((live) => {
-        this.item.text = live.ok ? "$(zap) Clawd" : "$(warning) Clawd";
+        this.item.text = live.ok ? "$(zap) OpenClawd" : "$(warning) OpenClawd";
         this.item.tooltip = this.tooltip(
           live.ok ? `Mesh ready · ${settings.meshModel}` : "Mesh not reachable"
         );
       })
       .catch(() => {
-        this.item.text = "$(warning) Clawd";
+        this.item.text = "$(warning) OpenClawd";
         this.item.tooltip = this.tooltip("Mesh not reachable");
       });
   }
@@ -34,14 +34,14 @@ export class StatusBarManager implements vscode.Disposable {
     const settings = readSettings();
     const tooltip = new vscode.MarkdownString();
     tooltip.isTrusted = true;
-    tooltip.appendMarkdown("### Clawd Mesh\n\n");
+    tooltip.appendMarkdown("### OpenClawd\n\n");
     tooltip.appendMarkdown(`${status}\n\n`);
     tooltip.appendMarkdown(`**Endpoint:** ${settings.meshUrl}\n\n`);
     tooltip.appendMarkdown(`**Model:** ${settings.meshModel}\n\n`);
     tooltip.appendMarkdown("---\n\n");
-    tooltip.appendMarkdown("[Ask Mesh](command:clawd.askMesh)\n\n");
-    tooltip.appendMarkdown("[Show status](command:clawd.meshStatus)\n\n");
-    tooltip.appendMarkdown("[Open Mesh](command:clawd.openMesh)\n");
+    tooltip.appendMarkdown("[Ask Mesh](command:openclawd.askMesh)\n\n");
+    tooltip.appendMarkdown("[Show status](command:openclawd.meshStatus)\n\n");
+    tooltip.appendMarkdown("[Open Mesh](command:openclawd.openMesh)\n");
     return tooltip;
   }
 

@@ -2,7 +2,7 @@ import * as http from "node:http";
 import * as https from "node:https";
 import { URL } from "node:url";
 
-export const DEFAULT_URL = "https://mesh.x402.wtf";
+export const DEFAULT_URL = "";
 export const DEFAULT_MODEL = "qwen2.5:1.5b";
 
 type Json = Record<string, unknown>;
