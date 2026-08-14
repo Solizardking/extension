@@ -3,7 +3,7 @@
   "displayName": "Clawd",
   "description": "Official Clawd pack for VS Code, Cursor, and VSCodium — Cursor plugins (Clawd, Clawd Code, Helius), Solana MCP servers, and agent skills.",
   "version": "1.0.0",
-  "publisher": "openclawd",
+  "publisher": "clawd",
   "license": "MIT",
   "pricing": "Free",
   "icon": "media/icon.png",

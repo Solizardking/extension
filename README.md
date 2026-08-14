@@ -114,7 +114,7 @@ Paper first. Live trades, sends, and secret-touching shell still need a human.
 
 ## Publish
 
-Publisher ID in `package.json` is `openclawd` — create that ID before the first upload.
+Publisher ID in `package.json` is `clawd` — it must match the publisher you created on the Marketplace.
 
 <details>
 <summary><b>Microsoft Marketplace</b> (VS Code + Cursor Extensions tab)</summary>
@@ -124,7 +124,7 @@ Publisher ID in `package.json` is `openclawd` — create that ID before the firs
 3. Publish:
 
 ```bash
-npx @vscode/vsce login openclawd
+npx @vscode/vsce login clawd
 npx @vscode/vsce publish
 ```
 
