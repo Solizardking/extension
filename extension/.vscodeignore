@@ -19,6 +19,9 @@ node_modules/**
 !README.md
 !CHANGELOG.md
 
+# Unused gallery art
+assets/header.png
+
 # Debug
 **/*.map
 **/*.log

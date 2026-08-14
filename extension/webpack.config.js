@@ -3,7 +3,10 @@ const path = require("path");
 /** @type {import("webpack").Configuration} */
 module.exports = {
   target: "node",
-  mode: "production",
+  mode: "none",
+  optimization: {
+    minimize: false,
+  },
   entry: "./src/extension.ts",
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -25,7 +28,7 @@ module.exports = {
       },
     ],
   },
-  devtool: "nosources-source-map",
+  devtool: false,
   infrastructureLogging: {
     level: "log",
   },

@@ -1,8 +1,8 @@
 {
   "name": "clawd",
   "displayName": "Clawd",
-  "description": "VS Code extension for Clawd Mesh",
-  "version": "1.0.2",
+  "description": "VS Code extension for Clawd",
+  "version": "1.0.3",
   "publisher": "clawd",
   "repository": "https://github.com/solizardking/extension",
   "license": "MIT",
@@ -10,21 +10,14 @@
     "vscode": "^1.96.0"
   },
   "categories": [
-    "Programming Languages",
     "Other"
   ],
   "keywords": [
     "clawd",
     "solana",
-    "mesh",
-    "inference",
-    "ide"
+    "vscode"
   ],
   "icon": "assets/icon.png",
-  "galleryBanner": {
-    "color": "#061117",
-    "theme": "dark"
-  },
   "activationEvents": [
     "onStartupFinished"
   ],
@@ -66,8 +59,8 @@
       "properties": {
         "clawd.meshUrl": {
           "type": "string",
-          "default": "https://mesh.x402.wtf",
-          "description": "Clawd Mesh base URL"
+          "default": "",
+          "description": "Mesh endpoint. Leave empty to use the bundled default."
         },
         "clawd.meshModel": {
           "type": "string",
@@ -80,7 +73,7 @@
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "watch": "webpack --watch --config webpack.config.js",
-    "package": "vsce package",
+    "package": "vsce package --no-rewrite-relative-links",
     "publish": "vsce publish",
     "vscode:prepublish": "npm run build"
   },
