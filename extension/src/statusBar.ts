@@ -17,6 +17,11 @@ export class StatusBarManager implements vscode.Disposable {
 
   refresh(): void {
     const settings = readSettings();
+    if (!settings.meshUrl) {
+      this.item.text = "$(zap) OpenClawd";
+      this.item.tooltip = this.tooltip("Set openclawd.meshUrl to enable Mesh");
+      return;
+    }
     health(settings.meshUrl)
       .then((live) => {
         this.item.text = live.ok ? "$(zap) OpenClawd" : "$(warning) OpenClawd";
@@ -36,7 +41,9 @@ export class StatusBarManager implements vscode.Disposable {
     tooltip.isTrusted = true;
     tooltip.appendMarkdown("### OpenClawd\n\n");
     tooltip.appendMarkdown(`${status}\n\n`);
-    tooltip.appendMarkdown(`**Endpoint:** ${settings.meshUrl}\n\n`);
+    if (settings.meshUrl) {
+      tooltip.appendMarkdown(`**Endpoint:** ${settings.meshUrl}\n\n`);
+    }
     tooltip.appendMarkdown(`**Model:** ${settings.meshModel}\n\n`);
     tooltip.appendMarkdown("---\n\n");
     tooltip.appendMarkdown("[Ask Mesh](command:openclawd.askMesh)\n\n");
