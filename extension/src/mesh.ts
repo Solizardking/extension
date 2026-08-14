@@ -1,25 +1,53 @@
-const http = require("node:http");
-const https = require("node:https");
-const { URL } = require("node:url");
+import * as http from "node:http";
+import * as https from "node:https";
+import { URL } from "node:url";
 
-const DEFAULT_URL = "https://mesh.x402.wtf";
-const DEFAULT_MODEL = "qwen2.5:1.5b";
+export const DEFAULT_URL = "https://mesh.x402.wtf";
+export const DEFAULT_MODEL = "qwen2.5:1.5b";
 
-function normalizeBase(url) {
+type Json = Record<string, unknown>;
+
+interface RequestResult {
+  status: number;
+  type: string;
+  raw: string;
+  json: Json | null;
+}
+
+interface ChatOptions {
+  model?: string;
+  messages?: Array<{ role: string; content: string }>;
+  prompt?: string;
+  maxTokens?: number;
+}
+
+export interface ChatResult {
+  ok: boolean;
+  endpoint: string;
+  model: string;
+  text: string;
+  raw: Json;
+}
+
+function normalizeBase(url: string): string {
   const raw = String(url || DEFAULT_URL).trim() || DEFAULT_URL;
   return raw.replace(/\/+$/, "");
 }
 
-function requestJson(target, { method = "GET", body, timeoutMs = 60000 } = {}) {
+function requestJson(
+  target: string,
+  options: { method?: string; body?: unknown; timeoutMs?: number } = {}
+): Promise<RequestResult> {
   const parsed = new URL(target);
-  const payload = body == null ? null : JSON.stringify(body);
+  const payload = options.body == null ? null : JSON.stringify(options.body);
   const transport = parsed.protocol === "http:" ? http : https;
+  const timeoutMs = options.timeoutMs ?? 60000;
 
   return new Promise((resolve, reject) => {
     const req = transport.request(
       parsed,
       {
-        method,
+        method: options.method ?? "GET",
         headers: {
           Accept: "application/json, text/event-stream",
           ...(payload
@@ -31,8 +59,8 @@ function requestJson(target, { method = "GET", body, timeoutMs = 60000 } = {}) {
         },
       },
       (res) => {
-        const chunks = [];
-        res.on("data", (chunk) => chunks.push(chunk));
+        const chunks: Buffer[] = [];
+        res.on("data", (chunk) => chunks.push(chunk as Buffer));
         res.on("end", () => {
           const raw = Buffer.concat(chunks).toString("utf8");
           const type = String(res.headers["content-type"] || "");
@@ -56,21 +84,21 @@ function requestJson(target, { method = "GET", body, timeoutMs = 60000 } = {}) {
   });
 }
 
-function tryParseBody(raw, type) {
+function tryParseBody(raw: string, type: string): Json | null {
   if (type.includes("text/event-stream")) {
     return parseSse(raw);
   }
   try {
-    return JSON.parse(raw);
+    return JSON.parse(raw) as Json;
   } catch {
     return null;
   }
 }
 
-function parseSse(raw) {
+function parseSse(raw: string): Json {
   let content = "";
   let model = "";
-  for (const line of String(raw).split(/\r?\n/)) {
+  for (const line of raw.split(/\r?\n/)) {
     if (!line.startsWith("data:")) {
       continue;
     }
@@ -79,10 +107,12 @@ function parseSse(raw) {
       continue;
     }
     try {
-      const parsed = JSON.parse(data);
-      model = parsed.model || model;
-      const delta = parsed.choices?.[0]?.delta?.content;
-      const message = parsed.choices?.[0]?.message?.content;
+      const parsed = JSON.parse(data) as Json;
+      model = (parsed.model as string) || model;
+      const choices = parsed.choices as Array<Json> | undefined;
+      const choice = choices?.[0];
+      const delta = (choice?.delta as Json | undefined)?.content;
+      const message = (choice?.message as Json | undefined)?.content;
       if (typeof delta === "string") {
         content += delta;
       } else if (typeof message === "string") {
@@ -100,19 +130,39 @@ function parseSse(raw) {
   };
 }
 
-function messageText(completion) {
-  if (!completion || typeof completion !== "object") {
+function messageText(completion: Json | null): string {
+  if (!completion) {
     return "";
   }
   if (completion.error) {
     const err = completion.error;
-    return typeof err === "string" ? err : err.message || JSON.stringify(err);
+    return typeof err === "string" ? err : String((err as Json).message || JSON.stringify(err));
   }
-  const choice = completion.choices?.[0];
-  return choice?.message?.content || choice?.delta?.content || completion.response || "";
+  const choices = completion.choices as Array<Json> | undefined;
+  const choice = choices?.[0];
+  const message = choice?.message as Json | undefined;
+  const delta = choice?.delta as Json | undefined;
+  return String(message?.content || delta?.content || completion.response || "");
 }
 
-async function health(baseUrl = DEFAULT_URL) {
+function errorMessage(value: unknown): string {
+  if (!value) {
+    return "Mesh request failed";
+  }
+  if (typeof value === "string") {
+    return value;
+  }
+  if (typeof value === "object" && value && "message" in value) {
+    return String((value as Json).message);
+  }
+  return JSON.stringify(value);
+}
+
+export async function health(baseUrl = DEFAULT_URL): Promise<{
+  ok: boolean;
+  status: number;
+  body: Json;
+}> {
   const res = await requestJson(`${normalizeBase(baseUrl)}/health`, { timeoutMs: 10000 });
   return {
     ok: res.status === 200 && res.json?.ok === true,
@@ -121,18 +171,19 @@ async function health(baseUrl = DEFAULT_URL) {
   };
 }
 
-async function listModels(baseUrl = DEFAULT_URL) {
+export async function listModels(baseUrl = DEFAULT_URL): Promise<string[]> {
   const res = await requestJson(`${normalizeBase(baseUrl)}/models`, { timeoutMs: 15000 });
   const models = res.json?.models;
-  return Array.isArray(models) ? models : [];
+  return Array.isArray(models) ? (models as string[]) : [];
 }
 
-async function chat(baseUrl, { model = DEFAULT_MODEL, messages, prompt, maxTokens = 512 } = {}) {
+export async function chat(baseUrl: string, options: ChatOptions = {}): Promise<ChatResult> {
   const url = normalizeBase(baseUrl);
+  const model = options.model || DEFAULT_MODEL;
   const payloadMessages =
-    Array.isArray(messages) && messages.length
-      ? messages
-      : [{ role: "user", content: String(prompt || "") }];
+    Array.isArray(options.messages) && options.messages.length
+      ? options.messages
+      : [{ role: "user", content: String(options.prompt || "") }];
 
   const primary = await requestJson(`${url}/v1/chat/completions`, {
     method: "POST",
@@ -140,7 +191,7 @@ async function chat(baseUrl, { model = DEFAULT_MODEL, messages, prompt, maxToken
     body: {
       model,
       messages: payloadMessages,
-      max_tokens: maxTokens,
+      max_tokens: options.maxTokens ?? 512,
       stream: false,
     },
   });
@@ -149,7 +200,7 @@ async function chat(baseUrl, { model = DEFAULT_MODEL, messages, prompt, maxToken
     return {
       ok: true,
       endpoint: `${url}/v1/chat/completions`,
-      model: primary.json.model || model,
+      model: String(primary.json.model || model),
       text: messageText(primary.json),
       raw: primary.json,
     };
@@ -169,27 +220,13 @@ async function chat(baseUrl, { model = DEFAULT_MODEL, messages, prompt, maxToken
     return {
       ok: true,
       endpoint: `${url}/api/sol-gpt/chat`,
-      model: fallback.json.model || model,
+      model: String(fallback.json.model || model),
       text: messageText(fallback.json),
       raw: fallback.json,
     };
   }
 
-  const err =
-    primary.json?.error ||
-    fallback.json?.error ||
-    fallback.raw ||
-    primary.raw ||
-    `Mesh HTTP ${primary.status}`;
-  throw new Error(typeof err === "string" ? err : err.message || JSON.stringify(err));
+  throw new Error(
+    errorMessage(primary.json?.error || fallback.json?.error || fallback.raw || primary.raw)
+  );
 }
-
-module.exports = {
-  DEFAULT_URL,
-  DEFAULT_MODEL,
-  normalizeBase,
-  health,
-  listModels,
-  chat,
-  messageText,
-};

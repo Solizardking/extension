@@ -26,11 +26,7 @@
     "theme": "dark"
   },
   "activationEvents": [
-    "onCommand:clawd.askMesh",
-    "onCommand:clawd.askMeshSelection",
-    "onCommand:clawd.meshStatus",
-    "onCommand:clawd.openMesh",
-    "onCommand:clawd.showOutput"
+    "onStartupFinished"
   ],
   "main": "./dist/extension.js",
   "contributes": {

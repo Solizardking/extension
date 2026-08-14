@@ -15,5 +15,8 @@ temp/
 
 # Extension packaging
 node_modules/
+extension/node_modules/
+extension/dist/
+extension/out/
 *.vsix
 .vscode-test/
