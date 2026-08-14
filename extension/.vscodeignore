@@ -1,0 +1,30 @@
+# Source files
+src/**
+out/**
+tsconfig.json
+webpack.config.js
+
+# Development files
+.vscode/**
+.vscode-test/**
+.gitignore
+.git/**
+.github/**
+
+# Node modules (bundled)
+node_modules/**
+
+# Docs except marketplace pages
+*.md
+!README.md
+!CHANGELOG.md
+
+# Debug
+**/*.map
+**/*.log
+
+# Misc
+.DS_Store
+Thumbs.db
+*.zip
+*.vsix

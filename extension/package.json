@@ -1,0 +1,100 @@
+{
+  "name": "clawd",
+  "displayName": "Clawd",
+  "description": "VS Code extension for Clawd Mesh",
+  "version": "1.0.2",
+  "publisher": "clawd",
+  "repository": "https://github.com/solizardking/extension",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Other"
+  ],
+  "keywords": [
+    "clawd",
+    "solana",
+    "mesh",
+    "inference",
+    "ide"
+  ],
+  "icon": "assets/icon.png",
+  "galleryBanner": {
+    "color": "#061117",
+    "theme": "dark"
+  },
+  "activationEvents": [
+    "onCommand:clawd.askMesh",
+    "onCommand:clawd.askMeshSelection",
+    "onCommand:clawd.meshStatus",
+    "onCommand:clawd.openMesh",
+    "onCommand:clawd.showOutput"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "clawd.askMesh",
+        "title": "clawd: Ask Mesh"
+      },
+      {
+        "command": "clawd.askMeshSelection",
+        "title": "clawd: Ask Mesh about Selection"
+      },
+      {
+        "command": "clawd.meshStatus",
+        "title": "clawd: Show Mesh Status"
+      },
+      {
+        "command": "clawd.openMesh",
+        "title": "clawd: Open Mesh"
+      },
+      {
+        "command": "clawd.showOutput",
+        "title": "clawd: Show Output"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "clawd.askMeshSelection",
+          "when": "editorHasSelection",
+          "group": "clawd"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Clawd",
+      "properties": {
+        "clawd.meshUrl": {
+          "type": "string",
+          "default": "https://mesh.x402.wtf",
+          "description": "Clawd Mesh base URL"
+        },
+        "clawd.meshModel": {
+          "type": "string",
+          "default": "qwen2.5:1.5b",
+          "description": "Default Mesh model id"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "watch": "webpack --watch --config webpack.config.js",
+    "package": "vsce package",
+    "publish": "vsce publish",
+    "vscode:prepublish": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.32",
+    "@types/vscode": "^1.96.0",
+    "@vscode/vsce": "^3.6.0",
+    "ts-loader": "9.5.2",
+    "typescript": "^5.7.2",
+    "webpack": "5.99.9",
+    "webpack-cli": "5.1.4"
+  }
+}
