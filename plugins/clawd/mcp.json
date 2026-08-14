@@ -31,12 +31,6 @@
     "cheshire-terminal": {
       "url": "https://mcp.scalar.com/mcp/9d212c87-117b-440a-b104-7e6aa02e078e"
     },
-    "robinhood-trading": {
-      "url": "https://agent.robinhood.com/mcp/trading"
-    },
-    "robinhood-banking": {
-      "url": "https://banking-agent.robinhood.com/mcp/banking"
-    },
     "paybox": {
       "url": "https://api.paybox.sh/mcp"
     },

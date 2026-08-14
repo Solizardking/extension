@@ -24,8 +24,8 @@ Square mark: `assets/logo.svg` (1:1, 128×128). Source tree: `core-ai/clawd-code
 | `XAI_API_KEY` | Grok (default provider) |
 
 ```bash
-export CLAWD_CODE_ROOT=/Users/8bit/solana-clawd-agent-kit-2/core-ai/clawd-code
-export CORE_AI_ROOT=/Users/8bit/solana-clawd-agent-kit-2/core-ai
+export CLAWD_CODE_ROOT=/path/to/core-ai/clawd-code
+export CORE_AI_ROOT=/path/to/core-ai
 cd "$CLAWD_CODE_ROOT" && npm install && npm run build
 ```
 
@@ -34,5 +34,4 @@ Runtime secrets stay in `~/.clawd-code/.env` (copy `.env.example`). Paper perps 
 ## Links
 
 - GitHub: `https://github.com/Solizardking/solana-clawd/tree/main/clawd-code`
-- Install: `curl -fsSL https://raw.githubusercontent.com/Solizardking/solana-clawd/main/clawd-code/install.sh | sh`
-- x402: `https://x402.wtf`
+- Mesh: `https://mesh.x402.wtf`

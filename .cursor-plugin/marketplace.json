@@ -5,14 +5,14 @@
     "url": "https://cheshireterminal.ai"
   },
   "metadata": {
-    "description": "Official Clawd marketplace — ClawdBot Go, Clawd Code, Helius/core-ai, Cheshire Terminal MCP, and Cursor plugin starters",
+    "description": "Clawd marketplace — ClawdBot Go, Clawd Code, Helius/core-ai, Cheshire Terminal MCP, and Cursor plugin starters",
     "version": "1.0.0"
   },
   "plugins": [
     {
       "name": "clawd",
       "source": "./plugins/clawd",
-      "description": "Official Clawd plugin: six-law harness, OODA trading, Cheshire Terminal MCP, MoonPay signed on-ramp URLs, and Solana agent catalog"
+      "description": "Clawd plugin: six-law harness, OODA paper trading, Cheshire Terminal MCP, and Solana agent catalog"
     },
     {
       "name": "clawd-code",

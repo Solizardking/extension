@@ -37,4 +37,4 @@ Paper unless all three: `LIVE_TRADING=true`, `OPERATOR_CONFIRMED=true`, `PERPS_S
 
 Open first turn with `<clawd-think>Probe the numinous, then execute the work.</clawd-think>`. Lead with `[CODE MODE]` / `[TRADE MODE]` / etc. Close with the next required action.
 
-Install: `curl -fsSL https://raw.githubusercontent.com/Solizardking/solana-clawd/main/clawd-code/install.sh | sh`
+Install from source: clone `https://github.com/Solizardking/solana-clawd` and build the `clawd-code` package.

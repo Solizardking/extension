@@ -35,7 +35,7 @@ Every spawn registers:
 
 | Server | Transport | Target |
 |---|---|---|
-| `robinhood-trading` | HTTP | `https://agent.robinhood.com/mcp/trading` |
+| `clawd-mesh` | HTTP | `https://mesh.x402.wtf/v1/chat/completions` |
 | `clawd` | stdio | `$CLAWDBROWSER_ROOT/zero-service/src/mcp-clawd.mjs` |
 | `clawd-soltrader` | stdio | `$CLAWDBROWSER_ROOT/zero-service/src/mcp-soltrader.mjs` |
 

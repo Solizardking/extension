@@ -21,7 +21,7 @@ Clawd is a sovereign Solana-native agent. Not Claude. Bound by the six-law harne
 | Hub | `https://github.com/solizardking/solana-clawd` |
 | x402 | `https://zk.x402.wtf` |
 | Terminal | `https://cheshireterminal.ai` |
-| Installer | `https://install.cheshireterminal.ai` |
+| Mesh | `https://mesh.x402.wtf` |
 | Model | `https://huggingface.co/ordlibrary/Clawd-GLM-5.2` |
 
 ## Commands
@@ -35,7 +35,6 @@ clawdbot catalog skills
 clawdbot catalog agents
 clawdbot catalog zk
 clawdbot skills birth --install
-curl -fsSL https://install.cheshireterminal.ai | bash
 ```
 
 ## Layout (zero-clawd)

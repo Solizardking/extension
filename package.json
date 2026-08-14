@@ -1,8 +1,8 @@
 {
   "name": "clawd",
   "displayName": "Clawd",
-  "description": "Official Clawd pack for VS Code, Cursor, and VSCodium — Cursor plugins (Clawd, Clawd Code, Helius), Solana MCP servers, and agent skills.",
-  "version": "1.0.0",
+  "description": "Clawd editor pack for VS Code, Cursor, and VSCodium: bundled Cursor plugins, Solana MCP servers, and agent skills.",
+  "version": "1.0.1",
   "publisher": "clawd",
   "license": "MIT",
   "pricing": "Free",
@@ -11,7 +11,7 @@
     "color": "#061117",
     "theme": "dark"
   },
-  "homepage": "https://cheshireterminal.ai",
+  "homepage": "https://github.com/solizardking/extension",
   "bugs": {
     "url": "https://github.com/solizardking/extension/issues"
   },
@@ -24,20 +24,14 @@
     "vscode": "^1.85.0"
   },
   "categories": [
-    "Machine Learning",
     "Other"
   ],
   "keywords": [
     "clawd",
     "solana",
-    "helius",
     "mcp",
     "cursor",
-    "jupiter",
-    "dflow",
-    "phantom",
-    "perps",
-    "cheshire"
+    "vscode"
   ],
   "activationEvents": [
     "onStartupFinished"
@@ -45,6 +39,23 @@
   "main": "./extension.js",
   "contributes": {
     "commands": [
+      {
+        "command": "clawd.askMesh",
+        "title": "Clawd: Ask Mesh",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "clawd.askMeshSelection",
+        "title": "Clawd: Ask Mesh about Selection"
+      },
+      {
+        "command": "clawd.meshStatus",
+        "title": "Clawd: Mesh Status"
+      },
+      {
+        "command": "clawd.openMesh",
+        "title": "Clawd: Open Mesh"
+      },
       {
         "command": "clawd.installCursorPlugins",
         "title": "Clawd: Install Cursor Plugins",
@@ -101,11 +112,16 @@
     "viewsWelcome": [
       {
         "view": "clawd.explorer",
-        "contents": "Install the OpenClawd marketplace plugins (Clawd, Clawd Code, Helius) into Cursor.\n[Install Cursor Plugins](command:clawd.installCursorPlugins)"
+        "contents": "Free inference is live on Clawd Mesh. Ask a question, or install Cursor plugins.\n[Ask Mesh](command:clawd.askMesh)\n[Install Cursor Plugins](command:clawd.installCursorPlugins)"
       }
     ],
     "menus": {
       "view/title": [
+        {
+          "command": "clawd.askMesh",
+          "when": "view == clawd.explorer",
+          "group": "navigation"
+        },
         {
           "command": "clawd.refresh",
           "when": "view == clawd.explorer",
@@ -127,35 +143,47 @@
           "command": "clawd.showPlugin",
           "when": "false"
         }
+      ],
+      "editor/context": [
+        {
+          "command": "clawd.askMeshSelection",
+          "when": "editorHasSelection",
+          "group": "clawd"
+        }
       ]
     },
     "configuration": {
       "title": "Clawd",
       "properties": {
-        "clawd.installCursorPluginsOnActivate": {
-          "type": "boolean",
-          "default": true,
-          "description": "Copy Clawd, Clawd Code, and Helius into ~/.cursor/plugins/local when the extension activates."
+        "clawd.meshUrl": {
+          "type": "string",
+          "default": "https://mesh.x402.wtf",
+          "description": "Clawd Mesh base URL for free inference."
         },
-        "clawd.heliusApiKey": {
+        "clawd.meshModel": {
+          "type": "string",
+          "default": "qwen2.5:1.5b",
+          "description": "Default Mesh model. Fast: qwen2.5:1.5b. Solana-tuned: 8bit/solana-clawd-core-ai:latest."
+        },
+        "clawd.heliusCredential": {
           "type": "string",
           "default": "",
-          "description": "Helius API key (or set HELIUS_API_KEY)."
+          "description": "Helius credential for bundled MCP servers. Environment override: HELIUS_API_KEY."
         },
         "clawd.solanaRpcUrl": {
           "type": "string",
           "default": "https://api.mainnet-beta.solana.com",
-          "description": "Solana RPC URL (or set SOLANA_RPC_URL)."
+          "description": "Solana RPC URL. Environment override: SOLANA_RPC_URL."
         },
-        "clawd.cheshireApiKey": {
+        "clawd.cheshireCredential": {
           "type": "string",
           "default": "",
-          "description": "Cheshire Terminal bearer token (or set CHESHIRE_API_KEY)."
+          "description": "Cheshire Terminal bearer credential. Environment override: CHESHIRE_API_KEY."
         },
-        "clawd.xaiApiKey": {
+        "clawd.xaiCredential": {
           "type": "string",
           "default": "",
-          "description": "xAI API key for Clawd Grok MCP (or set XAI_API_KEY)."
+          "description": "xAI credential for Clawd Grok MCP. Environment override: XAI_API_KEY."
         },
         "clawd.coreAiRoot": {
           "type": "string",

@@ -48,16 +48,11 @@ Handoff: `cheshire_agent_handoff`
 
 ## Local `pump-fun` tools (`mcp-server`)
 
-55 tools over stdio: Pump quoting/trading/fees/AMM, session wallet, provider status, Cheshire payment hosts (`mpp.api` / `x402.api`), plus **proxies** for Robinhood, PayBox, and MoonPay.
+55 tools over stdio: Pump quoting/trading/fees/AMM, session wallet, provider status, Cheshire payment hosts (`mpp.api` / `x402.api`), plus optional vendor proxies.
 
-Prefer official HTTP for those vendors:
+Prefer each vendor's own HTTP MCP when the operator already uses it. MoonPay widget URLs: use the `moonpay` skill. IP matching (`allowedIpAddress`) plus query-string HMAC is required for live on-ramp widgets.
 
-- Robinhood trading: `https://agent.robinhood.com/mcp/trading`
-- Robinhood banking: `https://banking-agent.robinhood.com/mcp/banking`
-- PayBox: `https://api.paybox.sh/mcp`
-- MoonPay widget URLs: use the `moonpay` skill (`skills/moonpay/scripts/sign-url.mjs`). IP matching (`allowedIpAddress`) plus query-string HMAC is required for live on-ramp widgets. The `pump-fun` proxy is not a substitute.
-
-Use `set_robinhood_session` / `set_paybox_session` on `pump-fun` only when proxying through the local server. Resources: `solana://config`, `cheshire://terminal`. Mutating Pump builders return instructions — they do not broadcast unless the operator signs.
+Resources: `solana://config`, `cheshire://terminal`. Mutating Pump builders return instructions — they do not broadcast unless the operator signs.
 
 ## 0x rules
 

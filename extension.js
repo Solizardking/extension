@@ -1,11 +1,11 @@
 const vscode = require("vscode");
-const { readSettings, isCursor } = require("./lib/settings");
-const { installCursorPlugins } = require("./lib/plugins");
+const { readSettings } = require("./lib/settings");
 const { registerMcpServers, catalogFromPlugins } = require("./lib/mcp");
 const { StatusBarManager } = require("./lib/statusBar");
 const { registerTree } = require("./lib/treeView");
 const { registerCommands, snapshot } = require("./lib/commands");
 const { log, disposeOutput } = require("./lib/output");
+const { health } = require("./lib/mesh");
 
 function activate(context) {
   let settings = readSettings();
@@ -41,22 +41,24 @@ function activate(context) {
     })
   );
 
-  if (settings.installOnActivate) {
-    const result = installCursorPlugins(context.extensionPath);
-    if (!result.ok) {
-      log(result.message);
-    } else {
-      log(result.message);
-    }
-    refresh();
-  }
-
   const mcpCatalog = catalogFromPlugins(context.extensionPath, settings);
   log(
-    `Activated on ${vscode.env.appName}. Plugins install ${
-      isCursor() ? "into Cursor" : "to ~/.cursor/plugins/local"
-    }. MCP ready ${mcpCatalog.filter((item) => item.ready).length}/${mcpCatalog.length}.`
+    `Activated on ${vscode.env.appName}. Use Clawd: Ask Mesh for free inference, or Clawd: Install Cursor Plugins to copy bundled plugins. MCP ready ${
+      mcpCatalog.filter((item) => item.ready).length
+    }/${mcpCatalog.length}.`
   );
+
+  health(settings.meshUrl)
+    .then((live) => {
+      log(
+        live.ok
+          ? `Clawd Mesh ready at ${settings.meshUrl} (${live.body.node || "ok"}). Default model ${settings.meshModel}.`
+          : `Clawd Mesh not ready at ${settings.meshUrl}.`
+      );
+    })
+    .catch((error) => {
+      log(`Clawd Mesh health check failed: ${error.message}`);
+    });
 }
 
 function deactivate() {

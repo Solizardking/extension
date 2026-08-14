@@ -17,12 +17,12 @@ Square mark: `assets/logo.svg` (1:1). Upstream: `core-ai/helius-cursor`, `helius
 
 | Variable | Purpose |
 |---|---|
-| `CORE_AI_ROOT` | `/Users/8bit/solana-clawd-agent-kit-2/core-ai` |
+| `CORE_AI_ROOT` | Path to `core-ai` |
 | `HELIUS_API_KEY` / `SOLANA_RPC_URL` | Helius MCP + Pump MCP |
 | `XAI_API_KEY` | Clawd Grok |
 
 ```bash
-export CORE_AI_ROOT=/Users/8bit/solana-clawd-agent-kit-2/core-ai
+export CORE_AI_ROOT=/path/to/core-ai
 cd "$CORE_AI_ROOT/helius-mcp" && npm install && npm run build
 cd "$CORE_AI_ROOT/mcp-server" && npm install && npm run build
 ```

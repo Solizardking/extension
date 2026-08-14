@@ -43,7 +43,7 @@ clawdbot solana research <mint>
 - `soltrader` / `clawd-soltrader` — quote before `execute_swap`; respect `MAX_SWAP_INPUT_AMOUNT`
 - `perps` / `vulcan` — pre-trade margin, leverage tier, and TPSL checks
 - `risk` — portfolio limits and circuit breakers
-- `robinhood-trading` — place trades only in the Robinhood **Agentic** account after desktop OAuth
+- `clawd-mesh` — free completions at `https://mesh.x402.wtf/v1/chat/completions`
 - `cheshire-terminal` — 0x **price** via server-side `ZEROEX_API_KEY`; never approve Settler
 
 ## Instructions

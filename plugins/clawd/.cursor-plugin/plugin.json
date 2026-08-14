@@ -2,7 +2,7 @@
   "name": "clawd",
   "displayName": "Clawd",
   "version": "1.1.0",
-  "description": "Official Clawd plugin for Cursor — six-law harness, ClawdBot Go runtime, Cheshire Terminal MCP, OODA trading, MoonPay signed on-ramp URLs, and Solana agent catalog.",
+  "description": "Clawd plugin for Cursor — six-law harness, ClawdBot Go runtime, Cheshire Terminal MCP, paper OODA, and Solana agent catalog.",
   "author": {
     "name": "OpenClawd",
     "url": "https://cheshireterminal.ai"
